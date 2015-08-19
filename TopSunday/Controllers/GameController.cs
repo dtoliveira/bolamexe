@@ -31,6 +31,7 @@ namespace TopSunday.Controllers
             Player pitt = new Player();
             Player pedro = new Player();
             Player henrique = new Player();
+            Player filipe = new Player();
 
             david.PlayedGames = 1;
             david.Name = "David";

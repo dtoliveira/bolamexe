@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Match";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,14 +7,76 @@
 @Scripts.Render("~/bundles/bootstrap")
 <script src="~/Scripts/bootstrap-rating-input.min.js"></script>
 
+<style>
+    div {
+        font-size: 12px;
+    }
+
+        div.winner {
+            font-size: 30px;
+        }
+</style>
 <h2>Match</h2>
 <div class="container">
+    <button class="btn btn-info" id="random" value="Pick one !">
+        <span class="glyphicon glyphicon-thumbs-up"></span> Search
+    </button>
+
+    <div id="display">
+    </div>
+
+
+    <br /><br /><br />
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Equipa A</th>
+                <th>Equipa B</th>
+            </tr>
+
+
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width:10% !important" id="pa1"></td>
+                <td style="width:10% !important" id="pb5"></td>
+
+            </tr>
+            <tr>
+                <td style="width:10% !important" id="pa2"></td>
+                <td style="width:10% !important" id="pb6"></td>
+
+            </tr>
+            <tr>
+                <td style="width:10% !important" id="pa3"></td>
+                <td style="width:10% !important" id="pb7"></td>
+
+            </tr>
+            <tr>
+                <td style="width:10% !important" id="pa4"></td>
+                <td style="width:10% !important" id="pb8"></td>
+
+            </tr>
+            <tr>
+                <td style="width:10% !important" id="pa5"></td>
+                <td style="width:10% !important" id="pb9"></td>
+
+            </tr>
+
+
+        </tbody>
+
+    </table>
+
     <table class="table table-striped">
         <thead>
-            <tr><th>Jogador</th>
+            <tr>
+                <th>Jogador</th>
                 <th>Estrelas</th>
             </tr>
-            
+
 
         </thead>
         <tbody>
@@ -46,4 +107,69 @@
         });
 
     });
+</script>
+<script>
+    // test case for http://stackoverflow.com/questions/9464555/js-jquery-animated-random-name-picker
+    var teamA
+    var players = @Html.Raw(Json.Encode(@ViewBag.Team));
+    var students = players;
+
+    var $display = $("#display");
+    var b=0;
+
+    $('#random').click(function(){
+        var total = students.length,
+            selected = Math.floor( Math.random() * total ),
+            i = 0;
+
+        console.log( "selected", selected );
+        //$display.animate( {"font-size": "12px"}, 0 );
+        // or
+        $display.removeClass( "winner" );
+
+
+            // improvement: use a for loop instead of a for..in
+            for (i=0; i<total; i++) {
+
+                console.log( "for", i );
+                // here is the trick, use an Immediately-Invoked Function Expression (IIFE)
+                // see http://benalman.com/news/2010/11/immediately-invoked-function-expression/
+                // play with the two button "IIFE" and "No IIFE" to see why this is important
+                var r = setTimeout((function(i){
+                    return function(){
+                        // code here will be delayed
+                        console.log( "timeout", i );
+
+
+                        if (i<4) {
+                            console.log(i);
+                            $display.text( students[i].Name.toUpperCase() );
+                            $('#pa'+i).html(students[i].Name.toUpperCase());
+                        }
+                        else {
+                            console.log(i);
+                            $display.text( students[i].Name.toUpperCase() );
+                            $('#pb'+i).html(students[i].Name.toUpperCase());
+
+                        }
+
+                        if( i === selected ) {
+                            //$display.animate( {"font-size": "30px"}, "fast" );
+                            // or
+                            $display.addClass( "winner" );
+                        }
+                    };
+                }(i)), i*250);
+
+                // improvement: triple equal sign, always !
+                if( i === selected ) {
+                    // code here will execute immediately
+                    break;
+                }
+            
+        }
+    });
+
+
+
 </script>
