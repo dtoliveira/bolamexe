@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    <link href="~/Content/half-slider.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -29,16 +30,82 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active">
+              
+            </li>
+            <li data-target="#myCarousel" data-slide-to="1">
+                 
+            </li>
+            <li data-target="#myCarousel" data-slide-to="2">
+                 
+            </li>
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" style="background-image: url('data:image/jpeg;base64,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');"></div>
+                <div class="carousel-caption">
+                    <h2>Caption 1</h2>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image: url('http://2.bp.blogspot.com/-3lHt5b5tIAA/UCOd392ybtI/AAAAAAAACKE/5YrrXAmTBlA/s1600/Wall+slb.png');"></div>
+                <div class="carousel-caption">
+                    <h2>Caption 2</h2>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image: url('http://fc02.deviantart.net/fs71/f/2010/068/3/5/S_L_Benfica_ID_by_MrMAU.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>Caption 3</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+    </header>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                @RenderBody()
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+            <!-- /.row -->
         </footer>
     </div>
 
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
