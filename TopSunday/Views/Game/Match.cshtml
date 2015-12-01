@@ -8,69 +8,33 @@
 <script src="~/Scripts/bootstrap-rating-input.min.js"></script>
 
 <style>
-    div {
-        font-size: 12px;
+    #grass {
+        height: 186px;
+        background: url(/samples/images/grass.png) repeat-x;
     }
 
-        div.winner {
-            font-size: 30px;
-        }
+    #sky {
+        position: relative;
+        height: 314px;
+        background: url(/samples/images/sky.png) repeat-x;
+    }
+
+    #ball {
+        position: absolute;
+        left: 670px;
+        top: 240px;
+    }
 </style>
 <h2>Match</h2>
 <div class="container">
-    <button class="btn btn-info" id="random" value="Pick one !">
-        <span class="glyphicon glyphicon-thumbs-up"></span> Search
-    </button>
+    <div class="row">
+<div class="col-xs-12 col-lg-12 col-md-12">
+    
 
-    <div id="display">
-    </div>
+<img id="ball" src="http://www.variosportdesporto.com/loja/images/bol_futsal_mikasa_fl450ygr.png" width="83" height="121" alt="Ball" class="img-responsive">
 
-
-    <br /><br /><br />
-
-
-    <table>
-        <thead>
-            <tr>
-                <th>Equipa A</th>
-                <th>Equipa B</th>
-            </tr>
-
-
-        </thead>
-        <tbody>
-            <tr>
-                <td style="width:10% !important" id="pa1"></td>
-                <td style="width:10% !important" id="pb5"></td>
-
-            </tr>
-            <tr>
-                <td style="width:10% !important" id="pa2"></td>
-                <td style="width:10% !important" id="pb6"></td>
-
-            </tr>
-            <tr>
-                <td style="width:10% !important" id="pa3"></td>
-                <td style="width:10% !important" id="pb7"></td>
-
-            </tr>
-            <tr>
-                <td style="width:10% !important" id="pa4"></td>
-                <td style="width:10% !important" id="pb8"></td>
-
-            </tr>
-            <tr>
-                <td style="width:10% !important" id="pa5"></td>
-                <td style="width:10% !important" id="pb9"></td>
-
-            </tr>
-
-
-        </tbody>
-
-    </table>
-
-    <table class="table table-striped">
+<div id="grass"></div>
+        <table class="table table-striped">
         <thead>
             <tr>
                 <th>Jogador</th>
@@ -82,94 +46,65 @@
         <tbody>
 
             @{List<TopSunday.Models.Player> list = new List<TopSunday.Models.Player>();
-            list = ViewBag.Team; }
+              list = ViewBag.Team; }
 
             {@foreach (TopSunday.Models.Player p in list)
-            {
+             {
                 <tr>
                     <td style="width:10% !important">
                         @p.Name
                     </td>
                     <td><input type="number" name="your_awesome_parameter" id="lbrate" class="rating" data-clearable="remove" /></td>
                 </tr>
-            }
+             }
 
             }
 
         </tbody>
 
     </table>
-</div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#lbRate').on('change', function () {
-            alert("Changed: " + $(this).val())
-        });
 
-    });
-</script>
+    </div>
+        </div>
+    </div>
 <script>
-    // test case for http://stackoverflow.com/questions/9464555/js-jquery-animated-random-name-picker
-    var teamA
-    var players = @Html.Raw(Json.Encode(@ViewBag.Team));
-    var students = players;
 
-    var $display = $("#display");
-    var b=0;
-
-    $('#random').click(function(){
-        var total = students.length,
-            selected = Math.floor( Math.random() * total ),
-            i = 0;
-
-        console.log( "selected", selected );
-        //$display.animate( {"font-size": "12px"}, 0 );
-        // or
-        $display.removeClass( "winner" );
+    var duration = 750,
+          ball = $("#ball"),
+          buttons = $(".btn");
 
 
-            // improvement: use a for loop instead of a for..in
-            for (i=0; i<total; i++) {
 
-                console.log( "for", i );
-                // here is the trick, use an Immediately-Invoked Function Expression (IIFE)
-                // see http://benalman.com/news/2010/11/immediately-invoked-function-expression/
-                // play with the two button "IIFE" and "No IIFE" to see why this is important
-                var r = setTimeout((function(i){
-                    return function(){
-                        // code here will be delayed
-                        console.log( "timeout", i );
+    function Animate(animation) {
 
-
-                        if (i<4) {
-                            console.log(i);
-                            $display.text( students[i].Name.toUpperCase() );
-                            $('#pa'+i).html(students[i].Name.toUpperCase());
-                        }
-                        else {
-                            console.log(i);
-                            $display.text( students[i].Name.toUpperCase() );
-                            $('#pb'+i).html(students[i].Name.toUpperCase());
-
-                        }
-
-                        if( i === selected ) {
-                            //$display.animate( {"font-size": "30px"}, "fast" );
-                            // or
-                            $display.addClass( "winner" );
-                        }
-                    };
-                }(i)), i*250);
-
-                // improvement: triple equal sign, always !
-                if( i === selected ) {
-                    // code here will execute immediately
-                    break;
-                }
-            
+        switch (animation) {
+            case 'jump':
+                ball.animate({ top: 120 }, duration, reset);
+                break;
+            case 'fade':
+                ball.animate({ opacity: 0 }, duration, reset);
+                break;
+            case 'move':
+                ball.animate({ left: 100 }, duration, reset);
+                break;
+            case 'shrink':
+                ball.animate({ width: 10, top: 310, left: 710 }, duration, reset);
+                break;
+            case 'expand':
+                ball.animate({ width: 200, top: 80, left: 330 }, duration, reset);
+                break;
         }
-    });
+    }
 
 
+    function reset() {
+        setTimeout(function () {
+            ball.animate({ opacity: 100, width: 100, top: 240, left: 400, height: 121 }, duration, function () {
+            });
+        }, duration);
+    }
+
+    Animate('expand');
+    Animate('jump');
 
 </script>

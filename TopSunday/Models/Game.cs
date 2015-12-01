@@ -10,6 +10,7 @@ namespace TopSunday.Models
     {
         [Key]
         public int ID { get; set; }
+
         public DateTime Data { get; set; }
     }
 }

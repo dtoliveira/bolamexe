@@ -9,7 +9,7 @@ namespace TopSunday.Controllers
 {
     public class GameController : Controller
     {
-        List<Player> matchTeamToday = new List<Player>();
+        private List<Player> matchTeamToday = new List<Player>();
 
         // GET: Game
         public ActionResult Match()
