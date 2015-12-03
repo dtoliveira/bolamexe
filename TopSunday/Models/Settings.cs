@@ -15,6 +15,6 @@ namespace TopSunday.Models
 
         [ForeignKey("GameDay")]
         public int GameTypeID { get; set; }
-        public virtual GameDay GameDay { get; set; }
+        public virtual GameDay GameDay { get; set; } 
     }
 }
