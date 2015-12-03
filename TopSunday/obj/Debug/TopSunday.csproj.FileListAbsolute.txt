@@ -114,7 +114,6 @@ C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Antlr3.Runtime.dll
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\EntityFramework.dll
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\EntityFramework.SqlServer.dll
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.AspNet.Identity.Owin.dll
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.Owin.dll
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.Owin.Host.SystemWeb.dll
@@ -149,7 +148,6 @@ C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Antlr3.Runtime.pdb
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Newtonsoft.Json.xml
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.AspNet.Identity.Core.xml
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.Owin.xml
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.Owin.Security.xml
@@ -162,3 +160,5 @@ C:\Users\dtavares\Source\Repos\topsunday\TopSunday\bin\Microsoft.Owin.Security.M
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\obj\Debug\TopSunday.csprojResolveAssemblyReference.cache
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\obj\Debug\TopSunday.dll
 C:\Users\dtavares\Source\Repos\topsunday\TopSunday\obj\Debug\TopSunday.pdb
+C:\Users\dtavares\Source\Repos\topsunday\TopSunday\obj\Debug\TopSunday.Migrations.FirstModulation.resources
+C:\Users\dtavares\Source\Repos\topsunday\TopSunday\obj\Debug\TopSunday.csproj.GenerateResource.Cache

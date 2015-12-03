@@ -8,17 +8,11 @@
 <script src="~/Scripts/bootstrap-rating-input.min.js"></script>
 
 <style>
-
-  
-
-    
-
 </style>
 <h2>Match</h2>
 <div class="container">
     <div class="row">
 <div class="col-xs-12 col-lg-12 col-md-12">
-    
 
 <img id="ball" src="http://www.variosportdesporto.com/loja/images/bol_futsal_mikasa_fl450ygr.png" width="83" height="121" alt="Ball" class="img-responsive">
 
@@ -29,30 +23,24 @@
                 <th>Jogador</th>
                 <th>Estrelas</th>
             </tr>
-
-
         </thead>
         <tbody>
 
-            @{List<TopSunday.Models.Player> list = new List<TopSunday.Models.Player>();
-              list = ViewBag.Team; }
+            @{
 
-            {@foreach (TopSunday.Models.Player p in list)
-             {
+                foreach (TopSunday.Models.Player p in ViewBag.Players as List<TopSunday.Models.Player>)
+                {
                 <tr>
                     <td style="width:10% !important">
                         @p.Name
                     </td>
                     <td><input type="number" name="your_awesome_parameter" id="lbrate" class="rating" data-clearable="remove" /></td>
                 </tr>
-             }
+                }
 
             }
-
         </tbody>
-
     </table>
-
     </div>
         </div>
     </div>
@@ -61,8 +49,6 @@
     var duration = 750,
           ball = $("#ball"),
           buttons = $(".btn");
-
-
 
     function Animate(animation) {
 
@@ -85,7 +71,6 @@
         }
     }
 
-
     function reset() {
         setTimeout(function () {
             ball.animate({ opacity: 100, width: 100, top: 240, left: 400, height: 121 }, duration, function () {
@@ -95,5 +80,4 @@
 
     Animate('expand');
     Animate('jump');
-
 </script>
