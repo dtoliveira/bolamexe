@@ -163,6 +163,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SundayViewModel.cs" />
+    <Compile Include="Controllers\WednesdayController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -202,6 +204,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="img\banner-bg.jpg" />
+    <Content Include="img\campo.jpg" />
     <Content Include="img\dog.png" />
     <Content Include="img\gif1.gif" />
     <Content Include="img\gif2.gif" />
@@ -261,9 +264,11 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Game\Match.cshtml" />
+    <Content Include="Views\Game\SundayStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Wednesday\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

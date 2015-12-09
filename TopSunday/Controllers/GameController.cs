@@ -23,5 +23,33 @@ namespace TopSunday.Controllers
 
             return View();
         }
+
+        public ActionResult SundayStats()
+        {
+            SundayViewModel vm = new SundayViewModel();
+
+            List<Classification> list;
+            ApplicationDbContext db = new ApplicationDbContext();
+
+
+            list = db.Classification.Where(x => x.GameDay.Description.Equals("Sunday")).ToList<Classification>();
+
+
+
+            ViewBag.SundayStats = list;
+            vm.Classification = list;
+            return View(vm);
+        }
+
+        public ActionResult WednesdayStats()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ViewBag.WednesdayStats = db.Classification.Where(x => x.GameDay.Description.Equals("Wednesday"));
+
+            }
+
+            return View(ViewBag.WednesdayStats);
+        }
     }
 }

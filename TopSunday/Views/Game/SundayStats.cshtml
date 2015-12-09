@@ -1,0 +1,119 @@
+﻿@model TopSunday.Controllers.SundayViewModel
+@{
+    ViewBag.Title = "SundayStats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #tbClassification tr:nth-child(2),
+    #tbClassification tr:nth-child(5),
+    #tbClassification tr:nth-child(7),
+    #tbClassification tr:nth-child(8),
+    #tbClassification tr:nth-child(11) {
+        background-color: #00ff21;
+    }
+
+    #tbClassification tr:nth-child(3),
+    #tbClassification tr:nth-child(4),
+    #tbClassification tr:nth-child(6),
+    #tbClassification tr:nth-child(9),
+    #tbClassification tr:nth-child(10) {
+        background-color: #ffd800;
+    }
+
+    #selectedTeams {
+        background-image: url(/img/campo.jpg);
+        no-repeat center top scroll;
+        background-size: 100% auto;
+        padding-bottom: 50%;
+        background-repeat: no-repeat;
+    }
+</style>
+<h2><u>Domingos</u></h2>
+@*<div class="row">
+    <div class="col-xs12 col-md-12 col-lg-12">
+        <div id="selectedTeams">
+
+            <div>
+                <div style="background-color: red; width:100px; height:150px">
+                <br />
+            </div>
+            </div>
+            
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+        </div>
+    </div>
+</div>*@
+<div class="row">
+    <div class="col-xs12 col-md-12 col-lg-12">
+        <div class="table-responsive">
+        <table class="table" id="tbClassification">
+            <tr>
+
+                
+                <th>Nome
+                </th>
+                <th>J
+                </th>
+                <th>V
+                </th>
+                <th>D
+                </th>
+                <th>E
+                </th>
+                <th>Pts
+                </th>
+                <th>
+                </th>
+
+            </tr>
+
+
+            @foreach (TopSunday.Models.Classification item in Model.Classification)
+            {
+                <tr>
+
+
+                    <td>
+                        @item.Player.Name
+                    </td>
+                    <td>
+                        @item.NumGames
+                    </td>
+                    <td>
+                        @item.Wins
+                    </td>
+                    <td>
+                        @item.Loses
+                    </td>
+                    <td>
+                        @item.Draws
+                    </td>
+                    <td>
+                        @item.TotalPoints
+                    </td>
+                    <td>
+                        @item.Resume
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+            </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#introHeader').hide();
+    });
+</script>
