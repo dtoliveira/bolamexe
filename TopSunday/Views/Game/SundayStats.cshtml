@@ -5,12 +5,17 @@
 }
 
 <style>
+    div.teamFoot, teamFoot {
+        display: none !important;
+    }
+
+
     #tbClassification tr:nth-child(2),
     #tbClassification tr:nth-child(5),
     #tbClassification tr:nth-child(7),
     #tbClassification tr:nth-child(8),
     #tbClassification tr:nth-child(11) {
-        background-color: #00ff21;
+        background-color: red;
     }
 
     #tbClassification tr:nth-child(3),
@@ -18,7 +23,7 @@
     #tbClassification tr:nth-child(6),
     #tbClassification tr:nth-child(9),
     #tbClassification tr:nth-child(10) {
-        background-color: #ffd800;
+        background-color: blue;
     }
 
     #selectedTeams {
@@ -30,90 +35,96 @@
     }
 </style>
 <h2><u>Domingos</u></h2>
-@*<div class="row">
-    <div class="col-xs12 col-md-12 col-lg-12">
-        <div id="selectedTeams">
 
-            <div>
-                <div style="background-color: red; width:100px; height:150px">
-                <br />
-            </div>
-            </div>
-            
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-
-        </div>
-    </div>
-</div>*@
 <div class="row">
+    <div class="col-xs12 col-md-6 col-lg-12">
+        <iframe id="teamA" width="354" height="526" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@Model.TeamA"></iframe>
+
+    </div>
+    <div class="col-xs12 col-md-6 col-lg-12">
+        <iframe id="teamB" width="354" height="526" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@Model.TeamB"></iframe>
+
+    </div>
+</div>
+
+<div class="row">
+
+
+
     <div class="col-xs12 col-md-12 col-lg-12">
         <div class="table-responsive">
-        <table class="table" id="tbClassification">
-            <tr>
-
-                
-                <th>Nome
-                </th>
-                <th>J
-                </th>
-                <th>V
-                </th>
-                <th>D
-                </th>
-                <th>E
-                </th>
-                <th>Pts
-                </th>
-                <th>
-                </th>
-
-            </tr>
-
-
-            @foreach (TopSunday.Models.Classification item in Model.Classification)
-            {
+            <table class="table" id="tbClassification">
                 <tr>
 
 
-                    <td>
-                        @item.Player.Name
-                    </td>
-                    <td>
-                        @item.NumGames
-                    </td>
-                    <td>
-                        @item.Wins
-                    </td>
-                    <td>
-                        @item.Loses
-                    </td>
-                    <td>
-                        @item.Draws
-                    </td>
-                    <td>
-                        @item.TotalPoints
-                    </td>
-                    <td>
-                        @item.Resume
-                    </td>
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        J
+                    </th>
+                    <th>
+                        V
+                    </th>
+                    <th>
+                        D
+                    </th>
+                    <th>
+                        E
+                    </th>
+                    <th>
+                        Pts
+                    </th>
+                    <th>
+                    </th>
 
                 </tr>
-            }
 
-        </table>
-            </div>
+
+                @foreach (TopSunday.Models.Classification item in Model.Classification)
+            {
+                    <tr>
+
+
+                        <td>
+                            @item.Player.Name
+                        </td>
+                        <td>
+                            @item.NumGames
+                        </td>
+                        <td>
+                            @item.Wins
+                        </td>
+                        <td>
+                            @item.Loses
+                        </td>
+                        <td>
+                            @item.Draws
+                        </td>
+                        <td>
+                            @item.TotalPoints
+                        </td>
+                        <td>
+                            @item.Resume
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+        </div>
     </div>
 </div>
 <script>
     $(document).ready(function () {
 
         $('#introHeader').hide();
+        $('div.teamFoot').hide();
+
+
     });
+
+
+
+
 </script>

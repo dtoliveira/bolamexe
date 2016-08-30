@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace TopSunday.Models
+namespace BolaMexe.Business
 {
-    internal class KeiAttribute : Attribute
+    public class Class1
     {
     }
 }

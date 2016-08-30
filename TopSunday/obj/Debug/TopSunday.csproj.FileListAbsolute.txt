@@ -212,7 +212,6 @@ C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\bin\Microsoft.Owin.Security.OA
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.csprojResolveAssemblyReference.cache
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.Migrations.FirstModulation.resources
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.csproj.GenerateResource.Cache
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.dll
