@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b7c38308d1a4ac9b424064ea0390dbe" Name="Diagram1">
+        <EntityTypeShape EntityType="BolaMexeModel.Classification" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="BolaMexeModel.GameTeams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BolaMexeModel.GameTypes" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BolaMexeModel.Player" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BolaMexeModel.PlayerConfirmationGames" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BolaMexeModel.Settings" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <AssociationConnector Association="BolaMexeModel.FK_Classification_Classification" ManuallyRouted="false" />
+        <AssociationConnector Association="BolaMexeModel.FK_Classification_GameTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="BolaMexeModel.FK_Classification_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="BolaMexeModel.FK_dbo_Settings_dbo_GameDay_GameTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="BolaMexeModel.FK_PlayerConfirmationGames_GameTypes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

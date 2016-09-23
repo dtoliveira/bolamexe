@@ -13,19 +13,28 @@ namespace TopSunday.Models
         [Key]
         public int ID { get; set; }
 
-        [ForeignKey("GameDay")]
+        [ForeignKey("GameType")]
         public int GameTypeID { get; set; }
-        public virtual GameDay GameDay { get; set; }
+        public virtual GameType GameType { get; set; }
 
         [ForeignKey("Player")]
         public int PlayerID { get; set; }
         public virtual Player Player { get; set; }
+
+        [ForeignKey("Settings")]
+        public int SettingsId { get; set; }
+        public virtual Settings Settings { get; set; }
+
+        [ForeignKey("Season")]
+        public int SeasonID { get; set; }
+        public virtual Season Season { get; set; }
+
 
         public int NumGames { get; set; }
         public int Wins { get; set; }
         public int Loses { get; set; }
         public int Draws { get; set; }
         public int TotalPoints { get; set; }
-        public string Resume { get; set; }
+        public int Goals { get; set; }
     }
 }

@@ -11,10 +11,6 @@ namespace TopSunday.Models
     {
         [Key]
         public int ID { get; set; }
-        public int TablePosition { get; set; }
-
-        [ForeignKey("GameDay")]
-        public int GameTypeID { get; set; }
-        public virtual GameDay GameDay { get; set; } 
+        public string TablePositions { get; set; }
     }
 }

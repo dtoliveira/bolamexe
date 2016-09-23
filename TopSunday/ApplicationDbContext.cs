@@ -15,12 +15,14 @@ namespace TopSunday
             Database.SetInitializer(new CreateDatabaseIfNotExists<ApplicationDbContext>());
         }
 
-        public virtual DbSet<Player> Player { get; set; }
-        public virtual DbSet<GameDay> GameDay { get; set; }
         public virtual DbSet<Classification> Classification { get; set; }
+        public virtual DbSet<GameType> GameType { get; set; }
+        public virtual DbSet<GameTeams> GameTeams { get; set; }
+        public virtual DbSet<Player> Player { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
-        public virtual DbSet<MVP> MVP { get; set; }
-        public virtual DbSet<GoldBidon> GoldBidon { get; set; }
-
+        public virtual DbSet<Season> Season { get; set; }
+        public virtual DbSet<PlayerConfirmationGames> PlayerConfirmationGames { get; set; }
+        public virtual DbSet<CurrentGame> CurrentGame { get; set; }
+        public virtual DbSet<Players_GameType> Players_GameType { get; set; }
     }
 }

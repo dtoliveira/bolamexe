@@ -1,15 +1,17 @@
 namespace TopSunday.Migrations
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using TopSunday.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<TopSunday.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(TopSunday.ApplicationDbContext context)
@@ -27,5 +29,6 @@ namespace TopSunday.Migrations
             //    );
             //
         }
+
     }
 }

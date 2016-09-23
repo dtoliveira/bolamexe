@@ -1,0 +1,446 @@
+﻿@model TopSunday.ViewModels.GamesViewModel
+@using TopSunday.SpecificObjects
+@using TopSunday.Models
+@using TopSunday.Controllers
+@{
+    Layout = "~/Views/Shared/_LayoutResume.cshtml";
+}
+
+<style>
+    div.container {
+        background: transparent;
+    }
+
+    div.lockframe {
+        z-index: -2;
+    }
+
+    .names {
+        color: whitesmoke;
+        font-size: medium;
+        font-family: Calibri;
+    }
+</style>
+
+@*<style>
+        @@import url(http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600,700);
+
+        body {
+            background-color: #222;
+            color: #c61618;
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        .trans {
+            -webkit-transition: all .3s ease-in-out;
+            -moz-transition: all .3s ease-in-out;
+            -o-transition: all .3s ease-in-out;
+            -ms-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+
+        .profil {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+            width: 200px;
+            background-color: #fff;
+            margin: 0 auto;
+            border: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .profil-back {
+            position: absolute;
+            top: 3px;
+            height: 160px;
+            width: 160px;
+            border-radius: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profil-bild {
+            z-index: 3;
+            position: absolute;
+            height: 150px;
+            width: 150px;
+            top: 8px;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 100%;
+            background-size: cover;
+            background-image: url(https://dl.dropboxusercontent.com/u/18050265/martintest.jpg);
+        }
+
+        .profil.active {
+            height: 400px;
+        }
+
+            .profil.active .profil-bild {
+                height: 200px;
+                width: 200px;
+                top: 0px;
+                border-radius: 0%;
+            }
+
+        .profil-name {
+            position: absolute;
+            bottom: 0;
+            font-size: 14px;
+            width: 100%;
+            color: #fff;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            padding: 7px 0;
+        }
+
+        .profil-content {
+            position: absolute;
+            top: 220px;
+            left: 10px;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .profil-mannschaft {
+            position: absolute;
+            font-size: 150px;
+            opactiy: 0.1;
+            color: rgba(20, 20, 20, 0.3);
+            z-index: -1;
+            line-height: 1;
+            bottom: 15px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .profil-plus {
+            font-weight: 300;
+            z-index: 4;
+            position: absolute;
+            font-size: 30px;
+            height: 18px;
+            width: 30px;
+            padding-top: 12px;
+            line-height: 0;
+            text-align: center;
+            border-radius: 100%;
+            color: #fff;
+            background-color: #c61618;
+            top: 140px;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+        }
+
+        .profil.active .profil-plus {
+            top: 185px;
+            right: -140px;
+            transform: rotate(405deg);
+            -webkit-transform: rotate(405deg);
+            background-color: #c61618;
+        }
+    </style>*@
+
+<!DOCTYPE html>
+
+<html>
+
+<body>
+
+
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+        @if (Model.HasTeams.Equals(true))
+        {
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-6">
+
+                    <div class="container">
+                        <iframe id="teamA" class="lockframe" width="354" height="526" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@Model.LinkTeamA"></iframe>
+
+                    </div>
+
+                </div>
+                <div class="col-xs-12 col-md-12 col-lg-6">
+                    <div class="container">
+                        <iframe id="teamB" class="lockframe" width="354" height="526" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@Model.LinkTeamB"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="container">
+
+                    <div class="col-xs-6">
+                        @{
+                            for (int i = 0; i < Model.GoalsTeamA.Count(); i++)
+                            {
+                                <div class="row">
+                                    @Html.LabelForModel(Model.GoalsTeamA[i].PlayerName, new { @class = "names" })
+                                    @Html.TextBoxFor(m => Model.GoalsTeamA[i].Goals, new { @class = "form-control", @type = "number" })
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="col-xs-6">
+                        @{
+                            for (int i = 0; i < Model.GoalsTeamB.Count(); i++)
+                            {
+                                <div class="row">
+                                    @Html.LabelForModel(Model.GoalsTeamB[i].PlayerName, new { @class = "names" })
+                                    @Html.TextBoxFor(m => Model.GoalsTeamB[i].Goals, new { @class = "form-control", @type = "number" })
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:5px;">
+                <button type="button" class="btn btn-primary btn-sm btn-block">Fechar Jogo</button>
+            </div>
+                            }
+                            else
+                            {
+
+                                <div class="row">
+
+                                    Quem vai a jogo
+
+                                    <div>
+                                        <form id="myForm" action="@Url.Action(" SetFinalteams","Game")" method="post">
+                                            <table class="table" cellpadding="0">
+                                                <tr>
+                                                    <th style="display:none"></th>
+                                                    <th>
+                                                        Jogador
+                                                    </th>
+                                                    <th>
+                                                        Tipo
+                                                    </th>
+                                                    <th>
+                                                        Joga
+                                                    </th>
+
+                                                </tr>
+
+                                                @for (int i = 0; i < @Model.PlayerConfirmations.Count(); i++)
+                                                {
+
+
+
+                                                    <tr>
+                                                        <td style="display:none">
+                                                            @Html.HiddenFor(m => Model.PlayerConfirmations[i].PlayerID)
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(m => Model.PlayerConfirmations[i].PlayerName)
+                                                        </td>
+
+                                                        @if (Model.PlayerConfirmations[i].IsSubstitute)
+                                                        {
+                                                            <td>
+                                                                @Html.HiddenFor(m => Model.PlayerConfirmations[i].IsSubstitute)
+                                                                Substituto
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+                                                                @Html.HiddenFor(m => Model.PlayerConfirmations[i].IsSubstitute)
+                                                                Fixo
+                                                            </td>
+                                                        }
+                                                        <td>
+                                                            @Html.CheckBoxFor(m => Model.PlayerConfirmations[i].GoToGame, new { @id = "chk_Vai_" + @Model.PlayerConfirmations[i].PlayerID })
+                                                        </td>
+                                                    </tr>
+
+                                                }
+
+                                            </table>
+
+                                            <input type="submit" @*onclick="post();" *@ value="Fechar Convocatória" />
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Adicionar Jogador</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div id="myModal" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Adicionar Jogador</h4>
+                                            </div>
+                                            <form action="@Url.Action(" Teste","Game")" method="post">
+                                                <div class="modal-body">
+
+                                                    <div class="form-group">
+                                                        <div class="form-horizontal">
+                                                            <h4>PlayerViewModel</h4>
+                                                            <hr />
+                                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.NewPlayer.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-10">
+                                                                    @Html.EditorFor(model => model.NewPlayer.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.NewPlayer.Name, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.NewPlayer.Sunday, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-10">
+                                                                    @Html.CheckBoxFor(model => model.NewPlayer.Sunday, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.NewPlayer.Sunday, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.NewPlayer.Wednesday, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-10">
+                                                                    @Html.CheckBoxFor(model => model.NewPlayer.Wednesday, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.NewPlayer.Wednesday, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.NewPlayer.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-10">
+                                                                    @Html.EditorFor(model => model.NewPlayer.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.NewPlayer.Email, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(model => model.NewPlayer.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                                <div class="col-md-10">
+                                                                    @Html.EditorFor(model => model.NewPlayer.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.NewPlayer.PhoneNumber, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+
+                                                            @Html.HiddenFor(m => m.Season)
+                                                            @Html.HiddenFor(m => m.GameType)
+                                                            <div class="form-group">
+                                                                <div class="col-md-offset-2 col-md-10">
+                                                                    <input type="submit" value="Adicionar Jogador" class="btn btn-default" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                                    <button type="submit" class="btn btn-default">Adicionar</button>
+
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+    </div>
+</body>
+</html>
+<script>
+
+    function AddPlayer() {
+
+    }
+
+    $('input[type=checkbox]').change(function (chk) {
+
+        var thisChk = $(this)[0];
+        var thisChkID = $(this)[0].id;
+        var jqueryChkId = $('#' + thisChkID);
+        var thisPlayerID = thisChkID.split('_')[2];
+
+
+
+        var numberOfCheckedRadio = $('input:checkbox:checked').length;
+
+
+        if (numberOfCheckedRadio <= 10) {
+
+            if (jqueryChkId[0].checked) {
+
+
+            }
+            else {
+
+                //todos os que nao estao checkados passam a enabled
+                //verificar se nao sao os que estao ao lado dos checkados
+
+
+                $("input:checkbox:not(:checked)").each(function myfunction() {
+
+                    var chkId = $(this)[0].id;
+                    var thisID = chkId.split('_')[2];
+
+                    var chkVai = $('#chk_Vai_' + thisID);
+
+                    var chkVaiChecked = $('#' + chkVai[0].id)[0].checked;
+
+
+                    if (!chkVaiChecked) {
+
+                        $('#' + chkVai[0].id)[0].disabled = false;
+
+
+                    }
+
+
+                });
+            }
+
+            if (numberOfCheckedRadio == 10) {
+
+                $("input:checkbox:not(:checked)").each(function myfunction() {
+
+                    var chkId = $(this)[0].id;
+                    var thisID = $('#' + chkId);
+
+                    if (thisID.is('disabled') == false) {
+
+                        thisID.attr('disabled', 'disabled');
+
+                    }
+
+
+                });
+            }
+        }
+
+    });
+
+    $(document).ready(function () {
+
+
+        $('iframe').click(function (event) {
+            alert("demo only");
+            event.preventDefault();
+
+        });
+    });
+
+</script>

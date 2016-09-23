@@ -1,4 +1,4 @@
-﻿@model TopSunday.Controllers.SundayViewModel
+﻿@model TopSunday.ViewModels.GamesViewModel
 @{
     ViewBag.Title = "SundayStats";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,13 +36,13 @@
 </style>
 <h2><u>Domingos</u></h2>
 
-<div class="row">
-    <div class="col-xs12 col-md-6 col-lg-12">
-        <iframe id="teamA" width="354" height="526" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@Model.TeamA"></iframe>
+<div class="row" >
+    <div class="col-xs-12 col-md-12 col-lg-6" >
+        <iframe id="teamA" width="354" height="526" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@Model.LinkTeamA"></iframe>
 
     </div>
-    <div class="col-xs12 col-md-6 col-lg-12">
-        <iframe id="teamB" width="354" height="526" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@Model.TeamB"></iframe>
+    <div class="col-xs-12 col-md-12 col-lg-6">
+        <iframe id="teamB" width="354" height="526" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="@Model.LinkTeamB"></iframe>
 
     </div>
 </div>
@@ -71,6 +71,9 @@
                     </th>
                     <th>
                         E
+                    </th>
+                    <th>
+                        G
                     </th>
                     <th>
                         Pts
@@ -102,10 +105,11 @@
                             @item.Draws
                         </td>
                         <td>
-                            @item.TotalPoints
+                            @item.Goals
                         </td>
                         <td>
-                            @item.Resume
+                            @item.TotalPoints
+
                         </td>
 
                     </tr>
@@ -117,6 +121,8 @@
 </div>
 <script>
     $(document).ready(function () {
+ 
+
 
         $('#introHeader').hide();
         $('div.teamFoot').hide();

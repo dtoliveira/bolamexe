@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BolaMexeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Classification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GameTypeID" Type="int" Nullable="false" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="NumGames" Type="int" Nullable="false" />
+          <Property Name="Wins" Type="int" Nullable="false" />
+          <Property Name="Loses" Type="int" Nullable="false" />
+          <Property Name="Draws" Type="int" Nullable="false" />
+          <Property Name="TotalPoints" Type="int" Nullable="false" />
+          <Property Name="Resume" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="GameTeams">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="GameTypeID" Type="int" Nullable="false" />
+          <Property Name="GameDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameTypes">
+          <Key>
+            <PropertyRef Name="GameTypeID" />
+          </Key>
+          <Property Name="GameTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Debit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PlayerConfirmationGames">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PresenceDate" Type="datetime" Nullable="false" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="GameTypeID" Type="int" Nullable="false" />
+          <Property Name="GoToGame" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TablePosition" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GameTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Classification_Classification">
+          <End Role="Classification" Type="Self.Classification" Multiplicity="1" />
+          <End Role="Classification1" Type="Self.Classification" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Classification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Classification1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classification_GameTypes">
+          <End Role="GameTypes" Type="Self.GameTypes" Multiplicity="1" />
+          <End Role="Classification" Type="Self.Classification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTypes">
+              <PropertyRef Name="GameTypeID" />
+            </Principal>
+            <Dependent Role="Classification">
+              <PropertyRef Name="GameTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classification_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Classification" Type="Self.Classification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Classification">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Settings_dbo_GameDay_GameTypeID">
+          <End Role="GameTypes" Type="Self.GameTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Settings" Type="Self.Settings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTypes">
+              <PropertyRef Name="GameTypeID" />
+            </Principal>
+            <Dependent Role="Settings">
+              <PropertyRef Name="GameTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerConfirmationGames_GameTypes">
+          <End Role="GameTypes" Type="Self.GameTypes" Multiplicity="1" />
+          <End Role="PlayerConfirmationGames" Type="Self.PlayerConfirmationGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTypes">
+              <PropertyRef Name="GameTypeID" />
+            </Principal>
+            <Dependent Role="PlayerConfirmationGames">
+              <PropertyRef Name="GameTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BolaMexeModelStoreContainer">
+          <EntitySet Name="Classification" EntityType="Self.Classification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameTeams" EntityType="Self.GameTeams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameTypes" EntityType="Self.GameTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlayerConfirmationGames" EntityType="Self.PlayerConfirmationGames" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Classification_Classification" Association="Self.FK_Classification_Classification">
+            <End Role="Classification" EntitySet="Classification" />
+            <End Role="Classification1" EntitySet="Classification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classification_GameTypes" Association="Self.FK_Classification_GameTypes">
+            <End Role="GameTypes" EntitySet="GameTypes" />
+            <End Role="Classification" EntitySet="Classification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classification_Player" Association="Self.FK_Classification_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Classification" EntitySet="Classification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Settings_dbo_GameDay_GameTypeID" Association="Self.FK_dbo_Settings_dbo_GameDay_GameTypeID">
+            <End Role="GameTypes" EntitySet="GameTypes" />
+            <End Role="Settings" EntitySet="Settings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerConfirmationGames_GameTypes" Association="Self.FK_PlayerConfirmationGames_GameTypes">
+            <End Role="GameTypes" EntitySet="GameTypes" />
+            <End Role="PlayerConfirmationGames" EntitySet="PlayerConfirmationGames" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BolaMexeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Classification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GameTypeID" Type="Int32" Nullable="false" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="NumGames" Type="Int32" Nullable="false" />
+          <Property Name="Wins" Type="Int32" Nullable="false" />
+          <Property Name="Loses" Type="Int32" Nullable="false" />
+          <Property Name="Draws" Type="Int32" Nullable="false" />
+          <Property Name="TotalPoints" Type="Int32" Nullable="false" />
+          <Property Name="Resume" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Classification1" Relationship="Self.FK_Classification_Classification" FromRole="Classification" ToRole="Classification1" />
+          <NavigationProperty Name="Classification2" Relationship="Self.FK_Classification_Classification" FromRole="Classification1" ToRole="Classification" />
+          <NavigationProperty Name="GameTypes" Relationship="Self.FK_Classification_GameTypes" FromRole="Classification" ToRole="GameTypes" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_Classification_Player" FromRole="Classification" ToRole="Player" />
+        </EntityType>
+        <EntityType Name="GameTeams">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="GameTypeID" Type="Int32" Nullable="false" />
+          <Property Name="GameDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="GameTypes">
+          <Key>
+            <PropertyRef Name="GameTypeID" />
+          </Key>
+          <Property Name="GameTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Classification" Relationship="Self.FK_Classification_GameTypes" FromRole="GameTypes" ToRole="Classification" />
+          <NavigationProperty Name="Settings" Relationship="Self.FK_dbo_Settings_dbo_GameDay_GameTypeID" FromRole="GameTypes" ToRole="Settings" />
+          <NavigationProperty Name="PlayerConfirmationGames" Relationship="Self.FK_PlayerConfirmationGames_GameTypes" FromRole="GameTypes" ToRole="PlayerConfirmationGames" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Debit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Classification" Relationship="Self.FK_Classification_Player" FromRole="Player" ToRole="Classification" />
+        </EntityType>
+        <EntityType Name="PlayerConfirmationGames">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PresenceDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="GameTypeID" Type="Int32" Nullable="false" />
+          <Property Name="GoToGame" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="GameTypes" Relationship="Self.FK_PlayerConfirmationGames_GameTypes" FromRole="PlayerConfirmationGames" ToRole="GameTypes" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TablePosition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GameTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GameTypes" Relationship="Self.FK_dbo_Settings_dbo_GameDay_GameTypeID" FromRole="Settings" ToRole="GameTypes" />
+        </EntityType>
+        <Association Name="FK_Classification_Classification">
+          <End Role="Classification" Type="Self.Classification" Multiplicity="1" />
+          <End Role="Classification1" Type="Self.Classification" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Classification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Classification1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classification_GameTypes">
+          <End Role="GameTypes" Type="Self.GameTypes" Multiplicity="1" />
+          <End Role="Classification" Type="Self.Classification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTypes">
+              <PropertyRef Name="GameTypeID" />
+            </Principal>
+            <Dependent Role="Classification">
+              <PropertyRef Name="GameTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classification_Player">
+          <End Role="Player" Type="Self.Player" Multiplicity="1" />
+          <End Role="Classification" Type="Self.Classification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Classification">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Settings_dbo_GameDay_GameTypeID">
+          <End Role="GameTypes" Type="Self.GameTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Settings" Type="Self.Settings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTypes">
+              <PropertyRef Name="GameTypeID" />
+            </Principal>
+            <Dependent Role="Settings">
+              <PropertyRef Name="GameTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerConfirmationGames_GameTypes">
+          <End Role="GameTypes" Type="Self.GameTypes" Multiplicity="1" />
+          <End Role="PlayerConfirmationGames" Type="Self.PlayerConfirmationGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTypes">
+              <PropertyRef Name="GameTypeID" />
+            </Principal>
+            <Dependent Role="PlayerConfirmationGames">
+              <PropertyRef Name="GameTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ApplicationDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Classification" EntityType="Self.Classification" />
+          <EntitySet Name="GameTeams" EntityType="Self.GameTeams" />
+          <EntitySet Name="GameTypes" EntityType="Self.GameTypes" />
+          <EntitySet Name="Player" EntityType="Self.Player" />
+          <EntitySet Name="PlayerConfirmationGames" EntityType="Self.PlayerConfirmationGames" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" />
+          <AssociationSet Name="FK_Classification_Classification" Association="Self.FK_Classification_Classification">
+            <End Role="Classification" EntitySet="Classification" />
+            <End Role="Classification1" EntitySet="Classification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classification_GameTypes" Association="Self.FK_Classification_GameTypes">
+            <End Role="GameTypes" EntitySet="GameTypes" />
+            <End Role="Classification" EntitySet="Classification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classification_Player" Association="Self.FK_Classification_Player">
+            <End Role="Player" EntitySet="Player" />
+            <End Role="Classification" EntitySet="Classification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Settings_dbo_GameDay_GameTypeID" Association="Self.FK_dbo_Settings_dbo_GameDay_GameTypeID">
+            <End Role="GameTypes" EntitySet="GameTypes" />
+            <End Role="Settings" EntitySet="Settings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerConfirmationGames_GameTypes" Association="Self.FK_PlayerConfirmationGames_GameTypes">
+            <End Role="GameTypes" EntitySet="GameTypes" />
+            <End Role="PlayerConfirmationGames" EntitySet="PlayerConfirmationGames" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BolaMexeModelStoreContainer" CdmEntityContainer="ApplicationDbContext">
+          <EntitySetMapping Name="Classification">
+            <EntityTypeMapping TypeName="BolaMexeModel.Classification">
+              <MappingFragment StoreEntitySet="Classification">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="GameTypeID" ColumnName="GameTypeID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="NumGames" ColumnName="NumGames" />
+                <ScalarProperty Name="Wins" ColumnName="Wins" />
+                <ScalarProperty Name="Loses" ColumnName="Loses" />
+                <ScalarProperty Name="Draws" ColumnName="Draws" />
+                <ScalarProperty Name="TotalPoints" ColumnName="TotalPoints" />
+                <ScalarProperty Name="Resume" ColumnName="Resume" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameTeams">
+            <EntityTypeMapping TypeName="BolaMexeModel.GameTeams">
+              <MappingFragment StoreEntitySet="GameTeams">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="GameTypeID" ColumnName="GameTypeID" />
+                <ScalarProperty Name="GameDate" ColumnName="GameDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameTypes">
+            <EntityTypeMapping TypeName="BolaMexeModel.GameTypes">
+              <MappingFragment StoreEntitySet="GameTypes">
+                <ScalarProperty Name="GameTypeID" ColumnName="GameTypeID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Player">
+            <EntityTypeMapping TypeName="BolaMexeModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Debit" ColumnName="Debit" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerConfirmationGames">
+            <EntityTypeMapping TypeName="BolaMexeModel.PlayerConfirmationGames">
+              <MappingFragment StoreEntitySet="PlayerConfirmationGames">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PresenceDate" ColumnName="PresenceDate" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="GameTypeID" ColumnName="GameTypeID" />
+                <ScalarProperty Name="GoToGame" ColumnName="GoToGame" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="BolaMexeModel.Settings">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TablePosition" ColumnName="TablePosition" />
+                <ScalarProperty Name="GameTypeID" ColumnName="GameTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
