@@ -420,7 +420,7 @@ namespace TopSunday.Controllers
                 .ThenByDescending(p => p.Goals)
                 .ThenBy(p => p.IsSubstitute)
                 .ThenByDescending(p => p.NumGames)
-                .ThenBy(p => p.PlayerName)
+                .ThenBy(p => p.PlayerName) 
                 .ToList<PlayersToGame>();
 
                     sundayVM.LinkTeamA = BuildTeam(lastTeams, 'A');

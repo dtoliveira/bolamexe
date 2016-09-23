@@ -214,6 +214,5 @@ C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\bin\Microsoft.Owin.Security.Tw
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.dll
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.pdb
-C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.csprojResolveAssemblyReference.cache
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.Migrations.DataBaseCreate.resources
 C:\Users\dtavares\Source\Repos\BolaMexe\TopSunday\obj\Debug\TopSunday.csproj.GenerateResource.Cache

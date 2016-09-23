@@ -163,15 +163,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\PlayersToGame.cs" />
-    <Compile Include="Controllers\PlayerViwModel.cs" />
-    <Compile Include="Controllers\_GameController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Migrations\201609231722368_DataBaseCreate.cs" />
     <Compile Include="Migrations\201609231722368_DataBaseCreate.Designer.cs">
       <DependentUpon>201609231722368_DataBaseCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classification.cs" />
     <Compile Include="Models\CurrentGame.cs" />
+    <Compile Include="Models\GameTeams.cs" />
+    <Compile Include="Models\GameType.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\PlayerConfirmationGames.cs" />
     <Compile Include="Models\Players_GameType.cs" />
+    <Compile Include="Models\Season.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="SpecificObjects\ClassificationList.cs" />
     <Compile Include="SpecificObjects\PlayerConfirmation.cs" />
     <Compile Include="SpecificObjects\PlayerResume.cs" />
@@ -181,13 +186,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Classification.cs" />
-    <Compile Include="Models\GameTeams.cs" />
-    <Compile Include="Models\GameType.cs" />
-    <Compile Include="Models\Player.cs" />
-    <Compile Include="Models\PlayerConfirmationGames.cs" />
-    <Compile Include="Models\Season.cs" />
-    <Compile Include="Models\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
   </ItemGroup>
