@@ -29,65 +29,72 @@ namespace TopSunday.Controllers
         }
 
 
-        public List<PlayersToGame> GetFinalTeams()
+        public List<PlayersToGame> GetFinalTeams(string gameType)
         {
             List<PlayersToGame> lastTeams = new List<PlayersToGame>();
             using (ApplicationDbContext ctx = new ApplicationDbContext())
             {
-                var gameTeamsByPlayer = ctx.Player.Include("Classification").Include("GameTeams").ToList<Player>();
+                var currentGame = ctx.CurrentGame.Include("GameType")
+                    .Where(c => c.WasOpen.Equals(true))
+                    .Where(c => c.GameType.Description.Equals(gameType));
 
-                List<int> lastIdPlayersTeams = new List<int>();
-
-                lastIdPlayersTeams = ctx.GameTeams.Include("GameType")
-                                      .Where(p => p.SeasonID == 1)
-                                      .Where(p => p.GameType.GameTypeID == 1)
-                                      .Select(p => p.PlayerID).Take(10).ToList<int>();
-
-                if (lastIdPlayersTeams != null && lastIdPlayersTeams.Count() > 0)
+                if (currentGame != null && currentGame.Count() > 0)
                 {
+                    var gameTeamsByPlayer = ctx.Player.Include("Classification").Include("GameTeams").ToList<Player>();
 
-                    List<Player> players = ctx.Player.Include("Classification")
-                        .Where(c => lastIdPlayersTeams.Contains(c.ID)).ToList<Player>();
+                    List<int> lastIdPlayersTeams = new List<int>();
 
-                    List<Classification> playersClassification = new List<Classification>();
-                    List<Classification> auxClassifications = new List<Classification>();
+                    lastIdPlayersTeams = ctx.GameTeams.Include("GameType")
+                                          .Where(p => p.SeasonID == 1)
+                                          .Where(p => p.GameType.Description.Equals(gameType))
+                                          .Select(p => p.PlayerID).Take(10).ToList<int>();
 
-                    if (players != null && players.Count() > 0)
+                    if (lastIdPlayersTeams != null && lastIdPlayersTeams.Count() > 0)
                     {
-                        foreach (Player p in players)
+
+                        List<Player> players = ctx.Player.Include("Classification")
+                            .Where(c => lastIdPlayersTeams.Contains(c.ID)).ToList<Player>();
+
+                        List<Classification> playersClassification = new List<Classification>();
+                        List<Classification> auxClassifications = new List<Classification>();
+
+                        if (players != null && players.Count() > 9)
                         {
-                            auxClassifications = p.Classification.Where(c => c.GameTypeID == 1).ToList<Classification>();
-
-                            if (auxClassifications != null)
+                            foreach (Player p in players)
                             {
-                                playersClassification.Add(auxClassifications.FirstOrDefault());
+                                auxClassifications = p.Classification.Where(c => c.GameType.Description.Equals(gameType)).ToList<Classification>();
 
+                                if (auxClassifications != null)
+                                {
+                                    playersClassification.Add(auxClassifications.FirstOrDefault());
+
+                                }
+                            }
+                        }
+
+                        if (playersClassification != null && playersClassification.Count() > 0)
+                        {
+                            foreach (Classification c in playersClassification)
+                            {
+                                var isPlayerSubstitute = ctx.Players_GameType.Include("GameType")
+                                    .Where(a => a.GameType.Description.Equals(gameType))
+                                    .Where(a => lastIdPlayersTeams.Contains(a.PlayerID)).FirstOrDefault().IsSubstitute;
+
+
+                                lastTeams.Add(new PlayersToGame
+                                {
+                                    PlayerID = c.PlayerID,
+                                    PlayerName = c.Player.Name,
+                                    Points = c.TotalPoints,
+                                    Goals = c.Goals,
+                                    NumGames = c.NumGames,
+                                    IsSubstitute = isPlayerSubstitute
+                                });
                             }
                         }
                     }
 
-                    if (playersClassification != null && playersClassification.Count() > 0)
-                    {
-                        foreach (Classification c in playersClassification)
-                        {
-                            var isPlayerSubstitute = ctx.Players_GameType
-                                .Where(a => a.GameTypeID.Equals(1))
-                                .Where(a => lastIdPlayersTeams.Contains(a.PlayerID)).FirstOrDefault().IsSubstitute;
-
-
-                            lastTeams.Add(new PlayersToGame
-                            {
-                                PlayerID = c.PlayerID,
-                                PlayerName = c.Player.Name,
-                                Points = c.TotalPoints,
-                                Goals = c.Goals,
-                                NumGames =0,
-                                IsSubstitute = isPlayerSubstitute
-                            });
-                        }
-                    }
                 }
-
                 ctx.Dispose();
             }
 
@@ -123,6 +130,9 @@ namespace TopSunday.Controllers
                 viewModel.LinkTeamB = BuildTeam(classificationPlayers, 'B');
                 viewModel.HasTeams = true;
 
+
+                ClosePresencesInGame(viewModel.GameType);
+
                 TempData["Game"] = viewModel;
 
             }
@@ -132,6 +142,13 @@ namespace TopSunday.Controllers
 
         private List<PlayersToGame> BuildTeamGoals(List<PlayersToGame> classificationPlayers, char typeTeam)
         {
+            //Set goals to 0
+
+            foreach (PlayersToGame item in classificationPlayers)
+            {
+                item.Goals = 0;
+            }
+
             List<PlayersToGame> team = new List<PlayersToGame>();
             switch (typeTeam.ToString())
             {
@@ -208,6 +225,94 @@ namespace TopSunday.Controllers
 
             return team;
 
+        }
+
+        public ActionResult InsertGoals(GamesViewModel playerGoals)
+        {
+            using (ApplicationDbContext ctx = new ApplicationDbContext())
+            {
+                UpdatePlayerData(playerGoals.GoalsTeamA, playerGoals.GameType, ctx);
+                UpdatePlayerData(playerGoals.GoalsTeamB, playerGoals.GameType, ctx);
+                SaveResults(playerGoals.GoalsTeamA, playerGoals.GameType, ctx);
+                SaveResults(playerGoals.GoalsTeamB, playerGoals.GameType, ctx);
+
+                CloseGame(ctx, playerGoals.GameType);
+
+
+                ctx.SaveChanges();
+            }
+
+            return RedirectToAction("Resume", new { @season = playerGoals.Season, @gameType = playerGoals.GameType });
+        }
+
+        private void CloseGame(ApplicationDbContext ctx, string gameType)
+        {
+            CurrentGame cg = ctx.CurrentGame
+                .Where(c => c.GameType.Description.Equals(gameType))
+                .Where(c => c.WasOpen.Equals(true)).FirstOrDefault();
+
+            if (cg != null)
+            {
+                ctx.CurrentGame.Remove(cg);
+            }
+
+        }
+
+        private void SaveResults(List<PlayersToGame> playersInfo, string gameType, ApplicationDbContext ctx)
+        {
+            foreach (PlayersToGame item in playersInfo)
+            {
+                GameTeams gt = ctx.GameTeams
+                    .Where(g => g.GameType.Description.Equals(gameType))
+                    .Where(g => g.PlayerID.Equals(item.PlayerID)).OrderByDescending(g => g.GameDate).FirstOrDefault();
+
+                if (gt != null)
+                {
+                    if (item.Draw) gt.FinalResult = "E";
+                    if (item.Win) gt.FinalResult = "V";
+                    if (item.Lose) gt.FinalResult = "D";
+
+                    gt.Goals = item.Goals;
+                    gt.GameDate = DateTime.Now;
+                    // gt.OwnGoals = item.OwnGoals;
+                }
+            }
+        }
+
+        private void UpdatePlayerData(List<PlayersToGame> playersInfo, string gameType, ApplicationDbContext ctx)
+        {
+            //inserir jogos golos vitorias derrotas empates na classificacao
+            foreach (PlayersToGame item in playersInfo)
+            {
+                Classification cls = ctx.Classification
+                        .Where(c => c.GameType.Description.Equals(gameType))
+                        .Where(c => c.PlayerID.Equals(item.PlayerID)).FirstOrDefault();
+
+                if (cls != null)
+                {
+                    cls.NumGames += 1;
+                    cls.Goals += item.Goals;
+
+                    if (item.Draw)
+                    {
+                        cls.Draws += 1;
+                        cls.TotalPoints += 1;
+                    }
+
+                    if (item.Win)
+                    {
+                        cls.Wins += 1;
+                        cls.TotalPoints += 3;
+                    }
+
+                    if (item.Lose)
+                    {
+                        cls.Loses += 1;
+                    }
+
+                }
+                //update na tabela gameteams com golos data do jogo e vitoria/empate/derrota
+            }
         }
 
         public List<PlayersToGame> AddTeams(List<PlayerConfirmation> tenPlayers)
@@ -395,8 +500,12 @@ namespace TopSunday.Controllers
         // GET: Sunday
         public ActionResult Resume(string season, string gameType)
         {
+            if (string.IsNullOrEmpty(season) && string.IsNullOrEmpty(gameType))
+            {
+                return RedirectToAction("HomePage");
+            }
 
-            //ClosePresencesInGame(gameType);
+
             GamesViewModel sundayVM = new GamesViewModel();
 
 
@@ -406,21 +515,20 @@ namespace TopSunday.Controllers
             }
             else
             {
-
-
-                List<PlayersToGame> lastTeams = GetFinalTeams();
+                List<PlayersToGame> lastTeams = GetFinalTeams(gameType);
 
                 if (lastTeams != null && lastTeams.Count() > 0)
                 {
                     sundayVM.hasOpengames = true;
                     sundayVM.HasTeams = true;
-
+                    sundayVM.Season = season;
+                    sundayVM.GameType = gameType;
                     lastTeams = lastTeams
                    .OrderByDescending(p => p.Points)
                 .ThenByDescending(p => p.Goals)
                 .ThenBy(p => p.IsSubstitute)
                 .ThenByDescending(p => p.NumGames)
-                .ThenBy(p => p.PlayerName) 
+                .ThenBy(p => p.PlayerName)
                 .ToList<PlayersToGame>();
 
                     sundayVM.LinkTeamA = BuildTeam(lastTeams, 'A');
@@ -430,6 +538,8 @@ namespace TopSunday.Controllers
                 }
                 else
                 {
+                    sundayVM.hasOpengames = false;
+                    sundayVM.HasTeams = false;
                     sundayVM.Season = season;
                     sundayVM.GameType = gameType;
                     sundayVM.Players = GetPlayers(season, gameType);
@@ -492,20 +602,15 @@ namespace TopSunday.Controllers
 
         private void ClosePresencesInGame(string gameType)
         {
-
             using (ApplicationDbContext ctx = new ApplicationDbContext())
             {
-                CurrentGame old = ctx.CurrentGame.Include("GameType")
-                    .Where(c => c.GameType.Description.Equals(gameType))
-                    .Where(c => c.WasOpen.Equals(true)).FirstOrDefault();
-
-
-                if (old != null)
+                ctx.CurrentGame.Add(new CurrentGame
                 {
-                    old.WasOpen = false;
-                    ctx.SaveChanges();
-                }
-
+                    GameDate = DateTime.Now,
+                    WasOpen = true,
+                    GameTypeID = ctx.GameType.Where(g => g.Description.Equals(gameType)).FirstOrDefault().GameTypeID
+                });
+                ctx.SaveChanges();
                 ctx.Dispose();
             }
         }
