@@ -25,11 +25,13 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/bundle/Styles/Shared")
+    @Scripts.Render("~/bundle/Scripts/Shared")
 </head>
 
 <body class="bodyReume">
     <div class="container">
-
+        @Html.Partial("_SKAlerts")
         <div class="row">
             <div class="col-lg-12">
                 @RenderBody()

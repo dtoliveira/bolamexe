@@ -177,6 +177,8 @@
     <Compile Include="Models\Players_GameType.cs" />
     <Compile Include="Models\Season.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="SK\Alerts.cs" />
+    <Compile Include="SK\SKController.cs" />
     <Compile Include="SpecificObjects\ClassificationList.cs" />
     <Compile Include="SpecificObjects\PlayerConfirmation.cs" />
     <Compile Include="SpecificObjects\PlayerResume.cs" />
@@ -451,6 +453,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\NotifIt\notifIt.css" />
+    <Content Include="Scripts\NotifIt\notifIt.js" />
+    <Content Include="Scripts\NotifIt\notifIt.min.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -495,6 +500,9 @@
     <Content Include="Views\Game\HomePage.cshtml" />
     <Content Include="Views\Player\AddPlayer.cshtml" />
     <Content Include="Views\Shared\_LayoutResume.cshtml" />
+    <Content Include="Scripts\NotifIt\notifIt.less" />
+    <Content Include="Views\Shared\_SkAlerts.cshtml" />
+    <Content Include="Views\Shared\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
