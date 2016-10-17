@@ -13,6 +13,15 @@ namespace TopSunday.Controllers
     public class GameController : SKController
     {
 
+        public ActionResult Classification(string gameType)
+        {
+            GamesViewModel GamesViewModel = new GamesViewModel();
+
+            List<Classification> classification = GetClassification("2016/2017", gameType);
+            GamesViewModel.Classification = BuildClassification(classification);
+            return View(GamesViewModel);
+        }
+
 
         public ActionResult HomePage()
         {
@@ -534,7 +543,7 @@ namespace TopSunday.Controllers
                 sundayVM.hasOpengames = HasOpenGames(gameType);
                 sundayVM.PlayerConfirmations = new List<PlayerConfirmation>();
                 List<Players_GameType> substitutesList = GetPLayersSubstitues(season, gameType);
-                List<Classification> sundayClassificationFromDB = GetSundayClassification("2016/2017", "Sunday");
+                List<Classification> sundayClassificationFromDB = GetClassification("2016/2017", "Sunday");
 
 
                 foreach (Player player in sundayVM.Players)
@@ -644,7 +653,7 @@ namespace TopSunday.Controllers
 
                 if (classificationList.Count() > 0)
                 {
-                    classificationList = classificationList.OrderByDescending(c => c.TotalPoints).ThenByDescending(c => c.Goals).
+                    classificationList = classificationList.OrderByDescending(c => c.TotalPoints).ThenByDescending(c => c.Goals).ThenBy(c=>c.PlayerName).
                         ToList<ClassificationList>();
 
                 }
@@ -698,7 +707,7 @@ namespace TopSunday.Controllers
 
         }
 
-        private List<Classification> GetSundayClassification(string season, string gameType)
+        private List<Classification> GetClassification(string season, string gameType)
         {
             List<Classification> sundayClassification = new List<Classification>();
 
