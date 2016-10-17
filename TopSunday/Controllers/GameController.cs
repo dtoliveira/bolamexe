@@ -331,18 +331,20 @@ namespace TopSunday.Controllers
                     if (item.Draw)
                     {
                         cls.Draws += 1;
-                        cls.TotalPoints += 1;
+                        cls.TotalPoints += 2;
                     }
 
                     if (item.Win)
                     {
                         cls.Wins += 1;
-                        cls.TotalPoints += 3;
+                        cls.TotalPoints += 4;
                     }
 
                     if (item.Lose)
                     {
                         cls.Loses += 1;
+                        cls.TotalPoints += 1;
+
                     }
 
                 }
