@@ -120,9 +120,9 @@ namespace TopSunday.Controllers
                                   .Where(p => p.GameType.Description.Equals(gameType))
                                   .OrderByDescending(p => p.GameDate).Take(10).ToList<GameTeams>();
 
-            if (gt!=null)
+            if (gt != null)
             {
-                gt.ForEach( 
+                gt.ForEach(
                     x => lastIdPlayersTeams.Add(x.PlayerID)
                     );
 
@@ -209,7 +209,7 @@ namespace TopSunday.Controllers
                 int gameTypeID = ctx.GameType.Where(c => c.Description.Equals(gameType)).FirstOrDefault().GameTypeID;
                 foreach (PlayersToGame player in classificationPlayers)
                 {
-                    
+
                     ctx.GameTeams.Add(new GameTeams
                     {
                         PlayerID = player.PlayerID,
@@ -304,6 +304,9 @@ namespace TopSunday.Controllers
 
         private void SaveResults(List<PlayersToGame> playersInfo, string gameType, ApplicationDbContext ctx)
         {
+            int gameTypeID = ctx.GameType.Where(g => g.Description.Equals(gameType)).FirstOrDefault().GameTypeID;
+            DateTime gameDate = ctx.CurrentGame.Where(c => c.GameTypeID.Equals(gameTypeID)).FirstOrDefault().GameDate;
+
             foreach (PlayersToGame item in playersInfo)
             {
                 GameTeams gt = ctx.GameTeams
@@ -317,7 +320,7 @@ namespace TopSunday.Controllers
                     if (item.Lose) gt.FinalResult = "D";
 
                     gt.Goals = item.Goals;
-                    gt.GameDate = DateTime.Now;
+                    gt.GameDate = new DateTime(gameDate.Year, gameDate.Month, gameDate.Day, 23, 25, 00);
                     // gt.OwnGoals = item.OwnGoals;
                 }
             }
@@ -522,10 +525,8 @@ namespace TopSunday.Controllers
                 sundayVM.GameType = gameType;
                 lastTeams = lastTeams
                .OrderByDescending(p => p.Points)
-            .ThenByDescending(p => p.Goals)
-            .ThenBy(p => p.IsSubstitute)
-            .ThenByDescending(p => p.NumGames)
-            .ThenBy(p => p.PlayerName)
+               .ThenByDescending(p => p.Goals)
+           .ThenBy(p => p.PlayerName)
             .ToList<PlayersToGame>();
 
                 sundayVM.LinkTeamA = BuildTeam(lastTeams, 'A');
@@ -543,7 +544,7 @@ namespace TopSunday.Controllers
                 sundayVM.hasOpengames = HasOpenGames(gameType);
                 sundayVM.PlayerConfirmations = new List<PlayerConfirmation>();
                 List<Players_GameType> substitutesList = GetPLayersSubstitues(season, gameType);
-                List<Classification> sundayClassificationFromDB = GetClassification("2016/2017", "Sunday");
+                List<Classification> sundayClassificationFromDB = GetClassification("2016/2017", gameType);
 
 
                 foreach (Player player in sundayVM.Players)
@@ -653,7 +654,7 @@ namespace TopSunday.Controllers
 
                 if (classificationList.Count() > 0)
                 {
-                    classificationList = classificationList.OrderByDescending(c => c.TotalPoints).ThenByDescending(c => c.Goals).ThenBy(c=>c.PlayerName).
+                    classificationList = classificationList.OrderByDescending(c => c.TotalPoints).ThenByDescending(c => c.Goals).ThenBy(c => c.PlayerName).
                         ToList<ClassificationList>();
 
                 }
@@ -696,8 +697,13 @@ namespace TopSunday.Controllers
 
             using (ApplicationDbContext ctx = new ApplicationDbContext())
             {
+
+                int gameTypeID = ctx.GameType.Where(g => g.Description.Equals(gameType)).FirstOrDefault().GameTypeID;
+
                 playersList = ctx.Players_GameType
-                    .Where(p => p.IsSubstitute.Equals(true)).GroupBy(p => p.Player.Name).Select(p => p.FirstOrDefault()).ToList<Players_GameType>();
+                    .Where(p => p.IsSubstitute.Equals(true))
+                    .Where(p => p.GameTypeID.Equals(gameTypeID))
+                    .GroupBy(p => p.Player.Name).Select(p => p.FirstOrDefault()).ToList<Players_GameType>();
 
 
                 ctx.Dispose();
