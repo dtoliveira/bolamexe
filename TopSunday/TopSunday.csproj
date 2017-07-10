@@ -367,6 +367,8 @@
     <Content Include="img\ipad.png" />
     <Content Include="img\phones.png" />
     <Content Include="img\stadium.jpg" />
+    <Content Include="img\stadium.png" />
+    <Content Include="img\stadium2.jpg" />
     <Content Include="Scripts\bootstrap-rating-input.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
