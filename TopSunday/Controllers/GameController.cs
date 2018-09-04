@@ -12,12 +12,13 @@ namespace TopSunday.Controllers
 {
     public class GameController : SKController
     {
+        string seasonValue = "2018/2019";
 
         public ActionResult Classification(string gameType)
         {
             GamesViewModel GamesViewModel = new GamesViewModel();
 
-            List<Classification> classification = GetClassification("2016/2017", gameType);
+            List<Classification> classification = GetClassification(seasonValue, gameType);
             GamesViewModel.Classification = BuildClassification(classification);
             return View(GamesViewModel);
         }
@@ -367,14 +368,15 @@ namespace TopSunday.Controllers
         public List<PlayersToGame> AddTeams(List<PlayerConfirmation> tenPlayers, string gameType)
         {
             List<PlayersToGame> classificationPlayers = new List<PlayersToGame>();
-
+            Player player = null;
             using (ApplicationDbContext ctx = new ApplicationDbContext())
             {
                 foreach (PlayerConfirmation item in tenPlayers)
                 {
+                    player = ctx.Player.Where(p => p.ID.Equals(item.PlayerID)).FirstOrDefault();
+
                     if (item.IsSubstitute.Equals(true))
                     {
-                        Player player = ctx.Player.Where(p => p.ID.Equals(item.PlayerID)).FirstOrDefault();
 
                         if (player != null)
                         {
@@ -398,6 +400,18 @@ namespace TopSunday.Controllers
                             Goals = cls.Goals,
                             NumGames = cls.NumGames,
                             IsSubstitute = ctx.Players_GameType.Where(p => p.PlayerID.Equals(cls.PlayerID)).FirstOrDefault().IsSubstitute
+                        });
+                    }
+                    else
+                    {
+                        classificationPlayers.Add(new PlayersToGame
+                        {
+                            PlayerID = player.ID,
+                            PlayerName = player.Name,
+                            Points = 0,
+                            Goals = 0,
+                            NumGames = 0,
+                            IsSubstitute = ctx.Players_GameType.Where(p => p.PlayerID.Equals(player.ID)).FirstOrDefault().IsSubstitute
                         });
                     }
 
@@ -491,6 +505,7 @@ namespace TopSunday.Controllers
         // GET: Sunday
         public ActionResult Resume(string season, string gameType)
         {
+            season = seasonValue;
             if (string.IsNullOrEmpty(season) && string.IsNullOrEmpty(gameType))
             {
                 return RedirectToAction("HomePage");
@@ -544,7 +559,7 @@ namespace TopSunday.Controllers
                 sundayVM.hasOpengames = HasOpenGames(gameType);
                 sundayVM.PlayerConfirmations = new List<PlayerConfirmation>();
                 List<Players_GameType> substitutesList = GetPLayersSubstitues(season, gameType);
-                List<Classification> sundayClassificationFromDB = GetClassification("2016/2017", gameType);
+                List<Classification> sundayClassificationFromDB = GetClassification(season, gameType);
 
 
                 foreach (Player player in sundayVM.Players)
@@ -553,7 +568,7 @@ namespace TopSunday.Controllers
                     {
                         PlayerID = player.ID,
                         PlayerName = player.Name,
-                        IsSubstitute = substitutesList.Where(p => p.PlayerID.Equals(player.ID)).ToList<Players_GameType>().Count > 0 ? true : false
+                        IsSubstitute = substitutesList!=null && substitutesList.Where(p => p.PlayerID.Equals(player.ID)).ToList<Players_GameType>().Count > 0 ? true : false
 
                     });
 

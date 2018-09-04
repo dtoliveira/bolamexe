@@ -16,6 +16,9 @@ namespace TopSunday
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //ApplicationDbContext db = new ApplicationDbContext();
+            //db.Configuration.
         }
     }
 }

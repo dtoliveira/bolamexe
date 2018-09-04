@@ -13,6 +13,7 @@
     <NameOfLastUsedPublishProfile>teste</NameOfLastUsedPublishProfile>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
     <UseIISExpress>true</UseIISExpress>
+    <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

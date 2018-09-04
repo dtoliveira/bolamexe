@@ -272,3 +272,5 @@ C:\Users\dtavares\Source\Repos\bolamexeOficial\TopSunday\obj\Debug\TopSunday.Mig
 C:\Users\dtavares\Source\Repos\bolamexeOficial\TopSunday\obj\Debug\TopSunday.csproj.GenerateResource.Cache
 C:\Users\dtavares\Source\Repos\bolamexeOficial\TopSunday\obj\Debug\TopSunday.dll
 C:\Users\dtavares\Source\Repos\bolamexeOficial\TopSunday\obj\Debug\TopSunday.pdb
+C:\Users\dtavares\Source\Repos\bolamexe\TopSunday\obj\Debug\TopSunday.csproj.CoreCompileInputs.cache
+C:\Users\dtavares\Source\Repos\bolamexe\TopSunday\obj\Debug\TopSunday.csproj.CopyComplete
