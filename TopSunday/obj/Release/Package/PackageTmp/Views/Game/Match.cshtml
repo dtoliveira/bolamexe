@@ -1,5 +1,4 @@
 ﻿@{
-    ViewBag.Title = "Match";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,74 +9,3 @@
 <style>
 </style>
 <h2>Match</h2>
-<div class="container">
-    <div class="row">
-<div class="col-xs-12 col-lg-12 col-md-12">
-
-<img id="ball" src="http://www.variosportdesporto.com/loja/images/bol_futsal_mikasa_fl450ygr.png" width="83" height="121" alt="Ball" class="img-responsive">
-
-<div id="grass"></div>
-        <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Jogador</th>
-                <th>Estrelas</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @{
-
-                foreach (TopSunday.Models.Player p in ViewBag.Players as List<TopSunday.Models.Player>)
-                {
-                <tr>
-                    <td style="width:10% !important">
-                        @p.Name
-                    </td>
-                    <td><input type="number" name="your_awesome_parameter" id="lbrate" class="rating" data-clearable="remove" /></td>
-                </tr>
-                }
-
-            }
-        </tbody>
-    </table>
-    </div>
-        </div>
-    </div>
-<script>
-
-    var duration = 750,
-          ball = $("#ball"),
-          buttons = $(".btn");
-
-    function Animate(animation) {
-
-        switch (animation) {
-            case 'jump':
-                ball.animate({ top: 120 }, duration, reset);
-                break;
-            case 'fade':
-                ball.animate({ opacity: 0 }, duration, reset);
-                break;
-            case 'move':
-                ball.animate({ left: 100 }, duration, reset);
-                break;
-            case 'shrink':
-                ball.animate({ width: 10, top: 310, left: 710 }, duration, reset);
-                break;
-            case 'expand':
-                ball.animate({ width: 200, top: 80, left: 330 }, duration, reset);
-                break;
-        }
-    }
-
-    function reset() {
-        setTimeout(function () {
-            ball.animate({ opacity: 100, width: 100, top: 240, left: 400, height: 121 }, duration, function () {
-            });
-        }, duration);
-    }
-
-    Animate('expand');
-    Animate('jump');
-</script>

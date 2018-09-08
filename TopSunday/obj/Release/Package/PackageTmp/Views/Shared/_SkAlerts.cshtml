@@ -1,0 +1,35 @@
+﻿@using TopSunday.SK;
+
+<ul >
+    @{foreach (var item in AlertType.ALL)
+      {
+          if (TempData.ContainsKey(item))
+          {
+              foreach (String messageFromList in ((List<string>)TempData[item]))
+              {
+                  foreach (String message in messageFromList.Split('\n'))
+                  {
+                      if (message != String.Empty)
+                      {
+                          if (item.ToLowerInvariant() == "warning")
+                          { 
+        <li class="alertMsg warningMsg">@message</li>
+                          }
+                          if (item.ToLowerInvariant() == "danger")
+                          { 
+        <li class="alertMsg dangerMsg">@message</li>
+                          }
+                          if (item.ToLowerInvariant() == "success")
+                          { 
+        <li class="alertMsg successMsg">@message</li>
+                          }
+                          if (item.ToLowerInvariant() == "info")
+                          { 
+        <li class="alertMsg infoMsg">@message</li>
+                          }
+                      }
+                  }
+              }
+          }
+      }}
+</ul>

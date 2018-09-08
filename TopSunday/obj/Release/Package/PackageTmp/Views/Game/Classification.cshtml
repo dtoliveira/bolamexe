@@ -1,0 +1,88 @@
+﻿@model TopSunday.ViewModels.GamesViewModel
+@using TopSunday.SpecificObjects
+    @{
+        ViewBag.Title = "Classification";
+        Layout = "~/Views/Shared/_LayoutResume.cshtml";
+    }
+
+<style>
+    
+    th
+    {
+        font-weight: bold;
+        color:whitesmoke;
+        background-color: black;
+    }
+
+    tr
+    {
+        font-weight: bold;
+        color: black;
+        background-color: whitesmoke;
+    }
+
+</style>
+
+    <div class="row">
+        <div class="col-xs12 col-md-12 col-lg-12">
+            <div class="table-responsive">
+                <table class="table" id="tbClassification">
+                    <tr>
+
+                        <th>
+                            Nome
+                        </th>
+                        <th>
+                            J
+                        </th>
+                        <th>
+                            V
+                        </th>
+                        <th>
+                            D
+                        </th>
+                        <th>
+                            E
+                        </th>
+                        <th>
+                            G
+                        </th>
+                        <th>
+                            Pts
+                        </th>
+                    </tr>
+
+
+                    @foreach (ClassificationList item in Model.Classification)
+            {
+                        <tr>
+                            <td>
+                                @item.PlayerName
+                            </td>
+                            <td>
+                                @item.NumGames
+                            </td>
+                            <td>
+                                @item.Wins
+                            </td>
+                            <td>
+                                @item.Loses
+                            </td>
+                            <td>
+                                @item.Draws
+                            </td>
+                            <td>
+                                @item.Goals
+                            </td>
+                            <td>
+                                @item.TotalPoints
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>

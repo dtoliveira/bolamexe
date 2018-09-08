@@ -16,7 +16,7 @@ namespace TopSunday
             routes.MapRoute(
       "Default", // Route name
       "{controller}/{action}/{id}", // URL with parameters
-      new { controller = "HomePage", action = "Game", id = UrlParameter.Optional }, // Parameter defaults
+      new { controller = "Game", action = "HomePage", id = UrlParameter.Optional }, // Parameter defaults
       new string[] { "TopSunday.Controllers" }
  );
         }

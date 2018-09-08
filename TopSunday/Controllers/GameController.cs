@@ -91,6 +91,9 @@ namespace TopSunday.Controllers
                 {
                     foreach (Classification c in playersClassification)
                     {
+                        if (c!=null)
+                        {
+
                         var isPlayerSubstitute = ctx.Players_GameType.Include("GameType")
                             .Where(a => a.GameType.Description.Equals(gameType))
                             .Where(a => lastIdPlayersTeams.Contains(a.PlayerID)).FirstOrDefault().IsSubstitute;
@@ -105,6 +108,8 @@ namespace TopSunday.Controllers
                             NumGames = c.NumGames,
                             IsSubstitute = isPlayerSubstitute
                         });
+                        }
+
                     }
                 }
             }

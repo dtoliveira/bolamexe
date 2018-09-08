@@ -1,0 +1,111 @@
+[id^=ui_notifIt] {
+    position: fixed;
+    top: 120px;
+    right: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-box-shadow: 0 3px 5px rgba(0,0,0,.3);
+    -moz-box-shadow: 0 3px 5px rgba(0,0,0,.3);
+    -o-box-shadow: 0 3px 5px rgba(0,0,0,.3);
+    box-shadow: 0 3px 5px rgba(0,0,0,.3);
+    -wekbit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    z-index: 100000;
+}
+
+    [id^=ui_notifIt]:hover {
+        opacity: 1!important;
+    }
+
+    [id^=ui_notifIt] p {
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 14px;
+        padding: 0;
+        margin: 0;
+    }
+
+.ui_notifIt_confirmDiv {
+    text-align: center;
+}
+
+.ui_notifIt_cancelAnchor, .ui_notifIt_confirmAnchor {
+    display: inline-block;
+}
+
+.notifIt_success {
+    background-color: #9acd32;
+    color: #fff;
+}
+
+    .notifIt_success .btNotifit {
+        background-color: #84b02b;
+        color: #fff;
+    }
+
+        .notifIt_success .btNotifit:hover {
+            background-color: #759c26;
+            color: #fff;
+        }
+
+.notifIt_error {
+    background-color: #ff4500;
+    color: #fff;
+}
+
+    .notifIt_error .btNotifit {
+        background-color: #db3b00;
+        color: #fff;
+    }
+
+        .notifIt_error .btNotifit:hover {
+            background-color: #c23400;
+            color: #fff;
+        }
+
+.notifIt_warning {
+    background-color: #ffa500;
+    color: #fff;
+}
+
+    .notifIt_warning .btNotifit {
+        background-color: #db8e00;
+        color: #fff;
+    }
+
+        .notifIt_warning .btNotifit:hover {
+            background-color: #c27d00;
+            color: #fff;
+        }
+
+.notifIt_info {
+    background-color: rgb(93,119,135) !important;
+    color: whitesmoke !important;
+}
+
+    .notifIt_info .btNotifit {
+        background-color: #00a4db;
+        color: #fff;
+    }
+
+        .notifIt_info .btNotifit:hover {
+            background-color: #0091c2;
+            color: #fff;
+        }
+
+.notifIt_default {
+    background-color: #eee;
+    color: #444;
+}
+
+    .notifIt_default .btNotifit {
+        background-color: #dcdcdc;
+        color: #444;
+    }
+
+        .notifIt_default .btNotifit:hover {
+            background-color: #cfcfcf;
+            color: #444;
+        }
